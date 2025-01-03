@@ -13,6 +13,7 @@ public class ArrayExamples {
         // Print all elements using a for loop
         System.out.println("Array elements: ");
         arrayExamples.printArray(numbers);
+        arrayExamples.addArray(numbers);
 
     }
 
@@ -23,4 +24,12 @@ public class ArrayExamples {
         }
     }
 
+    private void addArray(int[] nums){
+        int sum =0;
+        for (int num : nums) {
+            sum = sum +num;
+
+        }
+        System.out.println("Sum of the array elements: "+sum);
+    }
 }
