@@ -8,6 +8,13 @@ public class GraphApp {
     public static void main(String[] args) {
         GraphApp graph = new GraphApp(6);
         graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(1, 3);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+
+        graph.printGraph();
     }
 
     private final int vertices;
@@ -20,7 +27,18 @@ public class GraphApp {
             this.adjList.add(new ArrayList<>());
         }
     }
+
     public void addEdge(int v, int w) {
         adjList.get(v).add(w);
+    }
+
+    public void printGraph() {
+        for (int i = 0; i < vertices; i++) {
+            System.out.print("" + i + "-> {");
+            for (int neighbor : adjList.get(i)) {
+                System.out.print(neighbor + ",");
+            }
+            System.out.println("}");
+        }
     }
 }
