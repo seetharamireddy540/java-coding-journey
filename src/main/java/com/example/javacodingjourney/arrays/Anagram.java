@@ -3,6 +3,10 @@ package com.example.javacodingjourney.arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Time complexity - O(n)
+ * and Space complexity - O(n)
+ */
 public class Anagram {
 
     public static void main(String[] args) {
@@ -17,6 +21,7 @@ public class Anagram {
         }
         Map<Character, Integer> map1 = new HashMap<>();
         Map<Character, Integer> map2 = new HashMap<>();
+
         for (int i = 0; i < str1.length(); i++) {
             char ch1 = str1.charAt(i);
             map1.put(ch1, map1.getOrDefault(ch1, 0) + 1);
