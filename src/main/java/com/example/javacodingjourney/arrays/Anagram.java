@@ -26,7 +26,7 @@ public class Anagram {
             map2.put(ch2, map2.getOrDefault(ch2, 0) + 1);
         }
         for (Map.Entry<Character, Integer> entry : map1.entrySet()) {
-            if (!map2.containsKey(entry.getKey()) || !(map2.get(entry.getKey()) == entry.getValue())) {
+            if (!map2.containsKey(entry.getKey()) || !map2.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }
         }
