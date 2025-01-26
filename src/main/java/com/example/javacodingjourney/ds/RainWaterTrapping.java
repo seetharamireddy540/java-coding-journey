@@ -55,7 +55,6 @@ public class RainWaterTrapping {
         }
         int total = 0;
         for (int i = 0; i < elevation.length; i++) {
-
             if (elevation[i] < prefixMax[i] && elevation[i] < suffixMax[i]) {
                 total = total + Math.min(prefixMax[i], suffixMax[i]) - elevation[i];
             }
