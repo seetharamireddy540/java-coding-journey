@@ -63,7 +63,7 @@ public class RainWaterTrapping {
     }
 
     public static void main(String[] args) {
-        int[] elevation = {1, 2, 3, 1, 2, 4, 1, 2, 1};
+        int[] elevation = {1, 2, 1, 3};
         int prefixMax[] = computePrefixMax(elevation);
         int suffixMax[] = computeSuffixMax(elevation);
         System.out.println(trap(elevation)); // Output: 4

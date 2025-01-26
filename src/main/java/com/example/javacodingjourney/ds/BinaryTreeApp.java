@@ -27,7 +27,8 @@ public class BinaryTreeApp {
         node2.setLeft(node5);
         node2.setRight(node6);
         BinaryTreeApp binaryTree = new BinaryTreeApp(root);
-        binaryTree.buildParentMap();
+        binaryTree.printLevelOrder();
+        //binaryTree.buildParentMap();
 //        MaxDepthAndNodes maxDepthAndNodes = new MaxDepthAndNodes();
 //        maxDepthAndNodes.findMaxDepthAndNodesLevelOrder(root);
 //        maxDepthAndNodes.getNodesAtMaxDepth().forEach(System.out::print);
@@ -145,6 +146,29 @@ public class BinaryTreeApp {
                 }
 
             }
+        }
+    }
+
+    public void printLevelOrder() {
+        if (this.root == null) return;
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.addFirst(this.root);
+        int level = 0;
+        while(!queue.isEmpty()) {
+            int sizeOfQueue = queue.size();
+            System.out.println("\nLevel " + level);
+            for (int i = 0; i < sizeOfQueue; i++) {
+                Node node = queue.removeFirst();
+                System.out.print(node.getData()+",");
+                if (node.getLeft() != null) {
+                    queue.addLast(node.getLeft());
+                }
+                if (node.getRight() != null) {
+                    queue.addLast(node.getRight());
+                }
+            }
+            level++;
+
         }
     }
 
