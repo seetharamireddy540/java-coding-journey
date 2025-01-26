@@ -1,7 +1,13 @@
 package com.example.javacodingjourney.ds;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class BinaryTreeApp {
 
@@ -21,14 +27,18 @@ public class BinaryTreeApp {
         node2.setLeft(node5);
         node2.setRight(node6);
         BinaryTreeApp binaryTree = new BinaryTreeApp(root);
-
-        binaryTree.inorderIterative();
-        binaryTree.preorderIterative();
-        binaryTree.postOrderIterativeTwoStack();
-        binaryTree.postOrderIterativeOneStack();
-        binaryTree.inorder();
-        binaryTree.preorder();
-        binaryTree.postorder();
+        binaryTree.buildParentMap();
+//        MaxDepthAndNodes maxDepthAndNodes = new MaxDepthAndNodes();
+//        maxDepthAndNodes.findMaxDepthAndNodesLevelOrder(root);
+//        maxDepthAndNodes.getNodesAtMaxDepth().forEach(System.out::print);
+//        binaryTree.levelOrderIterative();
+//        binaryTree.inorderIterative();
+//        binaryTree.preorderIterative();
+//        binaryTree.postOrderIterativeTwoStack();
+//        binaryTree.postOrderIterativeOneStack();
+//        binaryTree.inorder();
+//        binaryTree.preorder();
+//        binaryTree.postorder();
     }
 
     private final Node root;
@@ -43,6 +53,35 @@ public class BinaryTreeApp {
 
     public Node getRoot() {
         return root;
+    }
+
+    public void levelOrderIterative() {
+        if (root == null) {
+            return;
+        }
+        Deque<Node> queue = new ArrayDeque<>();
+        HashMap<Integer, List<Node>> levelMap = new HashMap<>();
+
+        queue.addFirst(root);
+        int level = 0;
+        while (!queue.isEmpty()) {
+            int sizeOfQueue = queue.size();
+            levelMap.put(level, new ArrayList<>());
+            System.out.println("\nLevel " + level);
+            for (int i = 0; i < sizeOfQueue; i++) {
+                Node node = queue.removeLast();
+                System.out.print(node.getData() + " ");
+                levelMap.get(level).add(node);
+                if (node.getLeft() != null) {
+                    queue.addFirst(node.getLeft());
+                }
+                if (node.getRight() != null) {
+                    queue.addFirst(node.getRight());
+                }
+            }
+            level++;
+        }
+        System.out.println(levelMap.get(level - 1).size());
     }
 
     public void inorderIterative() {
@@ -108,6 +147,88 @@ public class BinaryTreeApp {
             }
         }
     }
+
+    public void buildParentMap() {
+        if (this.root == null) return;
+        Map<Node, Node> parentMap = new HashMap<>();
+        Deque<Node> stack = new ArrayDeque<>();
+        stack.push(this.root);
+        parentMap.put(this.root, null);
+        while (!stack.isEmpty()) {
+            Node current = stack.pop();
+            if (current.getRight() != null) {
+                stack.push(current.getRight());
+                parentMap.put(current.getRight(), current);
+            }
+            if (current.getLeft() != null) {
+                stack.push(current.getLeft());
+                parentMap.put(current.getLeft(), current);
+            }
+        }
+
+        parentMap.forEach((child, parent) -> {
+            if (parent != null && child != null) {
+                System.out.println(child.getData() + " -> " + parent.getData());
+            }
+        });
+    }
+    public Node lowestCommonAncestorRecursive(Node root, Node p, Node q) {
+        // Base case: if the root is null or matches either p or q, return root
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+
+        // Recursively search for p and q in the left and right subtrees
+        Node left = lowestCommonAncestorRecursive(root.left, p, q);
+        Node right = lowestCommonAncestorRecursive(root.right, p, q);
+
+        // If both left and right are non-null, the current node is the LCA
+        if (left != null && right != null) {
+            return root;
+        }
+
+        // If only one subtree contains p or q, return that subtree's result
+        return left != null ? left : right;
+    }
+
+    public Node lowestCommonAncestor(Node root, Node p, Node q) {
+        // Step 1: Build a parent map using iterative traversal
+        Map<Node, Node> parent = new HashMap<>();
+        Deque<Node> stack = new ArrayDeque<>();
+        stack.push(root);
+        parent.put(root, null); // Root has no parent
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+
+            // Push the right child first (so that the left child is processed first)
+            if (node.right != null) {
+                parent.put(node.right, node);
+                stack.push(node.right);
+            }
+
+            // Push the left child
+            if (node.left != null) {
+                parent.put(node.left, node);
+                stack.push(node.left);
+            }
+        }
+
+        // Step 2: Build a set of ancestors for node p
+        Set<Node> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = parent.get(p); // Move to the parent
+        }
+
+        // Step 3: Find the first common ancestor of node q in the ancestors set
+        while (!ancestors.contains(q)) {
+            q = parent.get(q); // Move to the parent
+        }
+
+        return q; // This is the LCA
+    }
+
 
     public void postOrderIterativeTwoStack() {
         if (this.root == null) return;
@@ -224,5 +345,82 @@ public class BinaryTreeApp {
         public void setRight(Node right) {
             this.right = right;
         }
+    }
+
+    public static class MaxDepthAndNodes {
+        private int maxDepth = 0; // To store the maximum depth
+        private List<Integer> nodesAtMaxDepth = new ArrayList<>(); // To store nodes at max depth
+
+
+        public void findMaxDepthAndNodes(Node root) {
+            if (root == null) {
+                return;
+            }
+            dfs(root, 0); // Start DFS from the root with depth 0
+        }
+
+        private void dfs(Node node, int depth) {
+            if (node == null) {
+                return;
+            }
+
+            // If the current depth is greater than maxDepth, update maxDepth and clear the list
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                nodesAtMaxDepth.clear();
+            }
+
+            // If the current depth equals maxDepth, add the node's value to the list
+            if (depth == maxDepth) {
+                nodesAtMaxDepth.add(node.data);
+            }
+
+            // Recursively traverse the left and right subtrees
+            dfs(node.left, depth + 1);
+            dfs(node.right, depth + 1);
+        }
+
+        public void findMaxDepthAndNodesLevelOrder(Node root) {
+            if (root == null) {
+                return;
+            }
+
+            Deque<Node> queue = new ArrayDeque<>();
+            queue.offer(root); // Add the root to the queue
+
+
+            while (!queue.isEmpty()) {
+                int levelSize = queue.size();
+                nodesAtMaxDepth.clear(); // Clear the list for the current level
+
+                // Process all nodes at the current level
+                for (int i = 0; i < levelSize; i++) {
+                    Node node = queue.poll();
+                    nodesAtMaxDepth.add(node.data); // Add the node to the current level list
+
+                    // Add the left and right children to the queue
+                    if (node.left != null) {
+                        queue.offer(node.left);
+                    }
+                    if (node.right != null) {
+                        queue.offer(node.right);
+                    }
+                }
+
+                maxDepth++; // Increment the depth after processing a level
+            }
+
+            System.out.println("Maximum Depth: " + maxDepth);
+            System.out.println("Nodes at Maximum Depth: " + nodesAtMaxDepth);
+        }
+
+        public int getMaxDepth() {
+            return maxDepth;
+        }
+
+        public List<Integer> getNodesAtMaxDepth() {
+            return nodesAtMaxDepth;
+        }
+
     }
 }
