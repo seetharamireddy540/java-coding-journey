@@ -12,21 +12,10 @@ import java.util.Set;
 public class BinaryTreeApp {
 
     public static void main(String[] args) {
-        Node root = new Node(1);
-        Node node1 = new Node(2);
-        Node node2 = new Node(3);
-        root.setLeft(node1);
-        root.setRight(node2);
-        Node node3 = new Node(4);
-        Node node4 = new Node(5);
-        node1.setLeft(node3);
-        node1.setRight(node4);
-
-        Node node5 = new Node(6);
-        Node node6 = new Node(7);
-        node2.setLeft(node5);
-        node2.setRight(node6);
-        BinaryTreeApp binaryTree = new BinaryTreeApp(root);
+        Node root = buiildTree();
+        Node symmetricTree = createSymmetricTree();
+        BinaryTreeApp binaryTree = new BinaryTreeApp(symmetricTree);
+        System.out.println("Is Symmetric Tree -" + binaryTree.isSymmetric(symmetricTree));
         binaryTree.printLevelOrder();
         //binaryTree.buildParentMap();
 //        MaxDepthAndNodes maxDepthAndNodes = new MaxDepthAndNodes();
@@ -41,6 +30,40 @@ public class BinaryTreeApp {
 //        binaryTree.preorder();
 //        binaryTree.postorder();
     }
+    private static Node createSymmetricTree() {
+        Node root = new Node(1);
+        Node node1 = new Node(2);
+        Node node2 = new Node(2);
+        root.setLeft(node1);
+        root.setRight(node2);
+        Node node3 = new Node(4);
+        Node node4 = new Node(5);
+        node1.setLeft(node3);
+        node1.setRight(node4);
+
+        Node node5 = new Node(5);
+        Node node6 = new Node(4);
+        node2.setLeft(node5);
+        node2.setRight(node6);
+        return root;
+    }
+    private static Node buiildTree() {
+        Node root = new Node(1);
+        Node node1 = new Node(2);
+        Node node2 = new Node(3);
+        root.setLeft(node1);
+        root.setRight(node2);
+        Node node3 = new Node(4);
+        Node node4 = new Node(5);
+        node1.setLeft(node3);
+        node1.setRight(node4);
+
+        Node node5 = new Node(6);
+        Node node6 = new Node(7);
+        node2.setLeft(node5);
+        node2.setRight(node6);
+        return root;
+    }
 
     private final Node root;
 
@@ -54,6 +77,32 @@ public class BinaryTreeApp {
 
     public Node getRoot() {
         return root;
+    }
+
+    private boolean isMirror(Node left, Node right) {
+        // If both nodes are null, they are mirror images
+        if (left == null && right == null) {
+            return true;
+        }
+
+        // If only one node is null, they are not mirror images
+        if (left == null || right == null) {
+            return false;
+        }
+
+        // Check three conditions:
+        // 1. Current nodes have same value
+        // 2. Left's left matches Right's right
+        // 3. Left's right matches Right's left
+        return (left.getData() == right.getData())
+                && isMirror(left.left, right.right)
+                && isMirror(left.right, right.left);
+    }
+    public boolean isSymmetric(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return isMirror(node.getLeft(), node.getRight());
     }
 
     public void levelOrderIterative() {
