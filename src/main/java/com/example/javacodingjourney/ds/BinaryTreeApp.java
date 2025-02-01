@@ -16,6 +16,7 @@ public class BinaryTreeApp {
         Node symmetricTree = createSymmetricTree();
         BinaryTreeApp binaryTree = new BinaryTreeApp(symmetricTree);
         System.out.println("Is Symmetric Tree -" + binaryTree.isSymmetric(symmetricTree));
+        System.out.println("Is Symmetric Tree -" + binaryTree.isSymmetricBSF(symmetricTree));
         binaryTree.printLevelOrder();
         //binaryTree.buildParentMap();
 //        MaxDepthAndNodes maxDepthAndNodes = new MaxDepthAndNodes();
@@ -30,6 +31,7 @@ public class BinaryTreeApp {
 //        binaryTree.preorder();
 //        binaryTree.postorder();
     }
+
     private static Node createSymmetricTree() {
         Node root = new Node(1);
         Node node1 = new Node(2);
@@ -47,6 +49,7 @@ public class BinaryTreeApp {
         node2.setRight(node6);
         return root;
     }
+
     private static Node buiildTree() {
         Node root = new Node(1);
         Node node1 = new Node(2);
@@ -79,6 +82,32 @@ public class BinaryTreeApp {
         return root;
     }
 
+    public boolean isSymmetricBSF(Node root) {
+        if (root == null) {
+            return true;
+        }
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.addLast(root.left);
+        queue.addLast(root.right);
+        while (!queue.isEmpty()) {
+            Node left = queue.removeFirst();
+            Node right = queue.removeFirst();
+            if (left.left == null && right.left == null) {
+                continue;
+            }
+            if (left.left == null || right.left == null || left.data != right.data) {
+                return false;
+            }
+            queue.addLast(left.left);
+            queue.addLast(right.right);
+            queue.addLast(left.right);
+            queue.addLast(right.left);
+
+        }
+        return true;
+
+    }
+
     private boolean isMirror(Node left, Node right) {
         // If both nodes are null, they are mirror images
         if (left == null && right == null) {
@@ -98,6 +127,7 @@ public class BinaryTreeApp {
                 && isMirror(left.left, right.right)
                 && isMirror(left.right, right.left);
     }
+
     public boolean isSymmetric(Node node) {
         if (node == null) {
             return true;
@@ -203,12 +233,12 @@ public class BinaryTreeApp {
         Deque<Node> queue = new ArrayDeque<>();
         queue.addFirst(this.root);
         int level = 0;
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             int sizeOfQueue = queue.size();
             System.out.println("\nLevel " + level);
             for (int i = 0; i < sizeOfQueue; i++) {
                 Node node = queue.removeFirst();
-                System.out.print(node.getData()+",");
+                System.out.print(node.getData() + ",");
                 if (node.getLeft() != null) {
                     queue.addLast(node.getLeft());
                 }
@@ -245,6 +275,7 @@ public class BinaryTreeApp {
             }
         });
     }
+
     public Node lowestCommonAncestorRecursive(Node root, Node p, Node q) {
         // Base case: if the root is null or matches either p or q, return root
         if (root == null || root == p || root == q) {
