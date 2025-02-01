@@ -28,7 +28,6 @@ public class RiversCountApp {
             return 0;
         }
         int count = 0;
-        Set<String> visitedRevierPosition = new HashSet<>();
         List<Integer> reversSize = new ArrayList<>();
         for (int i = 0; i < riverData.length; i++) {
             for (int j = 0; j < riverData[0].length; j++) {
