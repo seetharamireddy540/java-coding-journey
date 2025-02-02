@@ -15,6 +15,13 @@ public class BinaryTreeApp {
         Node root = buiildTree();
         Node symmetricTree = createSymmetricTree();
         BinaryTreeApp binaryTree = new BinaryTreeApp(symmetricTree);
+        Node bst = buiildBinarySearchTree();
+        BinaryTreeApp binaryTree2 = new BinaryTreeApp(bst);
+        boolean isBst1 = binaryTree2.validateBST(bst, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        boolean isBst2 = binaryTree2.isValidBSTInorder(bst);
+        System.out.println("is isBst1 ->" + isBst1);
+        System.out.println("is isBst2 ->" + isBst2);
+
         System.out.println("Is Symmetric Tree -" + binaryTree.isSymmetric(symmetricTree));
         System.out.println("Is Symmetric Tree -" + binaryTree.isSymmetricBSF(symmetricTree));
         binaryTree.printLevelOrder();
@@ -50,6 +57,26 @@ public class BinaryTreeApp {
         return root;
     }
 
+    private static Node buiildBinarySearchTree() {
+        Node root = new Node(10);
+        Node node1 = new Node(6);
+        Node node2 = new Node(12);
+        root.setLeft(node1);
+        root.setRight(node2);
+        Node node3 = new Node(5);
+        Node node4 = new Node(7);
+        node1.setLeft(node3);
+        node1.setRight(node4);
+
+        Node node5 = new Node(11);
+        Node node6 = new Node(14);
+        node2.setLeft(node5);
+        node2.setRight(node6);
+        Node node61 = new Node(16);
+        node6.setRight(node61);
+        return root;
+    }
+
     private static Node buiildTree() {
         Node root = new Node(1);
         Node node1 = new Node(2);
@@ -80,6 +107,91 @@ public class BinaryTreeApp {
 
     public Node getRoot() {
         return root;
+    }
+
+
+    private boolean validateBST(Node node, Integer min, Integer max) {
+        if (node == null) {
+            return true;
+        }
+
+        if ((min != null && node.getData() < min) ||
+                (max != null && node.getData() >= max)) {
+            return false;
+        }
+
+        return validateBST(node.left, min, node.getData()) &&
+                validateBST(node.right, node.getData(), max);
+    }
+
+    public boolean isValidBSTInorder(Node root) {
+        if (root == null) {
+            return true;
+        }
+
+        Deque<Node> stack = new ArrayDeque<>();
+        Node current = root;
+        Node prev = null;
+
+        while (!stack.isEmpty() || current != null) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            current = stack.pop();
+
+            if (prev != null && current.getData() <= prev.getData()) {
+                return false;
+            }
+
+            prev = current;
+            current = current.right;
+        }
+
+        return true;
+    }
+
+
+    public boolean isValidBST1(Node root) {
+        if (root == null) {
+            return true;
+        }
+
+        Deque<Node> stack = new ArrayDeque<>();
+        Deque<Integer> minStack = new ArrayDeque<>();
+        Deque<Integer> maxStack = new ArrayDeque<>();
+
+        stack.push(root);
+        minStack.push(null);
+        maxStack.push(null);
+
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            Integer min = minStack.pop();
+            Integer max = maxStack.pop();
+
+            if (node == null) {
+                continue;
+            }
+
+            if ((min != null && node.getData() <= min) ||
+                    (max != null && node.getData() >= max)) {
+                return false;
+            }
+
+            // Push right child
+            stack.push(node.right);
+            minStack.push(node.getData());
+            maxStack.push(max);
+
+            // Push left child
+            stack.push(node.left);
+            minStack.push(min);
+            maxStack.push(node.getData());
+        }
+
+        return true;
     }
 
     public boolean isSymmetricBSF(Node root) {
