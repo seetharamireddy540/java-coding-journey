@@ -58,4 +58,39 @@ public class IncreasingSubArrayCount {
 
         return totalSubarrays;
     }
+
+    public long countMonotonicSubarrays(int[] nums) {
+        long totalSubarrays = 0;
+        int startIdx = 0;
+        int arraySize = nums.length;
+
+        while (startIdx < arraySize - 1) {
+            int endIdx = startIdx + 1;
+
+            // Check if sequence is increasing
+            if (nums[endIdx] > nums[startIdx]) {
+                while (endIdx < arraySize && nums[endIdx] > nums[endIdx - 1]) {
+                    endIdx++;
+                }
+            }
+            // Check if sequence is decreasing
+            else if (nums[endIdx] < nums[startIdx]) {
+                while (endIdx < arraySize && nums[endIdx] < nums[endIdx - 1]) {
+                    endIdx++;
+                }
+            }
+            // If equal, move to next element
+            else {
+                startIdx++;
+                continue;
+            }
+
+            long currentSubarrayCount = endIdx - startIdx;
+            totalSubarrays += (currentSubarrayCount + 1) * currentSubarrayCount / 2;
+            startIdx = endIdx;
+        }
+
+        // Don't forget to count single-element subarrays
+        return totalSubarrays + nums.length;
+    }
 }
