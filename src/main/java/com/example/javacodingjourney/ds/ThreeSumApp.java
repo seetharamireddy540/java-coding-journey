@@ -8,8 +8,11 @@ public class ThreeSumApp {
 
     public static void main(String[] args) {
 
+        int data [] = { -3, 3, 0, 1, 2, -3};
+        System.out.println(threeSum(data).toString());
+
     }
-    public List<List<Integer>> threeSum(int[] nums) {
+    public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);
 
