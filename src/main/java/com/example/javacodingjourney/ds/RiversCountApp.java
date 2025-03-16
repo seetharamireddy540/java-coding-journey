@@ -19,7 +19,6 @@ public class RiversCountApp {
 
         count = countConnectedRivers(riverData);
         System.out.println("Number of rivers connected: " + count);
-        System.out.println("Number of rivers connected: " + count);
 
     }
 

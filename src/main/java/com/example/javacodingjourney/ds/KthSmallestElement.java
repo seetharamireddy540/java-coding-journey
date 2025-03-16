@@ -3,6 +3,9 @@ package com.example.javacodingjourney.ds;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * The time complexity is O(H + k) where H is the height of the tree, and the space complexity is O(H) for the stack
+ */
 public class KthSmallestElement {
 
 

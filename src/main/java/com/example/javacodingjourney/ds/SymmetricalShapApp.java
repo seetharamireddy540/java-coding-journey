@@ -27,12 +27,7 @@ public class SymmetricalShapApp {
                 {7, 5}
         };
 
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.print(data[i][j] + ",");
-            }
-            System.out.println("");
-        }
+        printArrayData(data);
 
         // O(nLog(n) for merge / quick /heap ... sorting algorithms
         Arrays.sort(data, (o1, o2) -> {
@@ -43,12 +38,7 @@ public class SymmetricalShapApp {
             }
         });
 
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.print(data[i][j] + ",");
-            }
-            System.out.println("");
-        }
+        printArrayData(data);
 
         int n = data.length;
         for (int i = 0; i < n / 2; i++) {
@@ -61,5 +51,14 @@ public class SymmetricalShapApp {
             average += data[i][0];
         }
         System.out.println("symmetric line is " + average / data.length);
+    }
+
+    private static void printArrayData(int[][] data) {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                System.out.print(data[i][j] + ",");
+            }
+            System.out.println("");
+        }
     }
 }

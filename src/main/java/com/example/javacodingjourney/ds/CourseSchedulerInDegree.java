@@ -3,7 +3,7 @@ package com.example.javacodingjourney.ds;
 import java.util.*;
 
 public class CourseSchedulerInDegree {
-    // Approach 1: Using BFS (Kahn's Algorithm)
+
     public static List<String> findCourseSequenceBFS(String[] courses, Map<String, List<String>> dependencies) {
         // Create adjacency list and in-degree map
         Map<String, List<String>> graph = new HashMap<>();
