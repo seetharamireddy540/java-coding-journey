@@ -3,7 +3,7 @@ package com.example.javacodingjourney.ds;
 public class LongestCommonSubsequence {
     public static void main(String[] args) {
         String text1 = "abded";
-        String text2 = "aced";
+        String text2 = "paced";
 
         String lcs = findLCS(text1, text2);
         System.out.println("LCS Length: " + lcs.length());
