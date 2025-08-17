@@ -101,6 +101,7 @@ public class BinaryTreeApp {
         this.root = root;
     }
 
+
     public BinaryTreeApp(int data) {
         this.root = new Node(data);
     }
