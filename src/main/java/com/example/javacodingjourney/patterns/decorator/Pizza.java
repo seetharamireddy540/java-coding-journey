@@ -1,5 +1,8 @@
 package com.example.javacodingjourney.patterns.decorator;
 
+import lombok.Getter;
+
+@Getter
 public abstract class Pizza {
 
     public String description;
@@ -9,8 +12,5 @@ public abstract class Pizza {
         this.description = description;
     }
 
-    public String getDescription(){
-        return this.description;
-    }
     public abstract double getCost();
 }

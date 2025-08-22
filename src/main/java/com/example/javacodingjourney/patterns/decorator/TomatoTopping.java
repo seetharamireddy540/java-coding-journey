@@ -1,7 +1,7 @@
 package com.example.javacodingjourney.patterns.decorator;
 
 public class TomatoTopping extends ToppingDecorator {
-    private Pizza pizza;
+    private final Pizza pizza;
 
     public TomatoTopping(Pizza pizza) {
         super(pizza);

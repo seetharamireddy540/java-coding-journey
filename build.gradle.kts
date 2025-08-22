@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+//    implementation("org.springframework.ai:spring-ai-starter-mcp-server")
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")

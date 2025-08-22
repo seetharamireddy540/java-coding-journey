@@ -20,7 +20,7 @@ public class ThreadApp {
     }
 
     public static class Task implements Runnable {
-        private SharedData sharedData;
+        private final SharedData sharedData;
 
         public Task(SharedData sharedData) {
             this.sharedData = sharedData;
@@ -36,7 +36,7 @@ public class ThreadApp {
     }
 
     public static class SharedData {
-        private int counter = 0;
+        private int counter;
 
         public SharedData(int counter) {
             this.counter = counter;

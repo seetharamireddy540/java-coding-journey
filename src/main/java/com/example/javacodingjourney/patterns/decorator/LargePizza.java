@@ -1,8 +1,8 @@
 package com.example.javacodingjourney.patterns.decorator;
 
-public class LargePiazz extends Pizza {
+public class LargePizza extends Pizza {
 
-    public LargePiazz(String description) {
+    public LargePizza(String description) {
         super(description);
     }
 
