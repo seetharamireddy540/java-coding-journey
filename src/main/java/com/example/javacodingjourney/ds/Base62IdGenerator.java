@@ -10,18 +10,18 @@ public class Base62IdGenerator {
         long timestamp = System.currentTimeMillis();
 
         // Mix timestamp with random number to ensure uniqueness
-        long mixed = timestamp + (long)(Math.random() * 100000);
+        long mixed = timestamp + (long) (Math.random() * 100000);
 
         // Convert to base62
         while (id.length() < ID_LENGTH) {
-            int remainder = (int)(mixed % BASE);
+            int remainder = (int) (mixed % BASE);
             id.insert(0, ALPHABET.charAt(remainder));
             mixed = mixed / BASE;
         }
 
         // Pad with random characters if necessary
         while (id.length() < ID_LENGTH) {
-            id.append(ALPHABET.charAt((int)(Math.random() * BASE)));
+            id.append(ALPHABET.charAt((int) (Math.random() * BASE)));
         }
 
         return id.toString();

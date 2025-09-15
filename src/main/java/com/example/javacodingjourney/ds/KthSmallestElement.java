@@ -18,7 +18,7 @@ public class KthSmallestElement {
         root.right.left = new TreeNode(13);
         root.right.right = new TreeNode(16);
         inordre(root);
-        System.out.println("");
+        System.out.println();
         System.out.println("K smallest element is -> " + kthSmallest(root, 1));
 
     }

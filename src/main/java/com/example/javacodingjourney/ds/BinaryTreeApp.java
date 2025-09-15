@@ -11,6 +11,16 @@ import java.util.Set;
 
 public class BinaryTreeApp {
 
+    private final Node root;
+
+    public BinaryTreeApp(Node root) {
+        this.root = root;
+    }
+
+    public BinaryTreeApp(int data) {
+        this.root = new Node(data);
+    }
+
     public static void main(String[] args) {
         Node root = buiildTree();
         Node symmetricTree = createSymmetricTree();
@@ -93,17 +103,6 @@ public class BinaryTreeApp {
         node2.setLeft(node5);
         node2.setRight(node6);
         return root;
-    }
-
-    private final Node root;
-
-    public BinaryTreeApp(Node root) {
-        this.root = root;
-    }
-
-
-    public BinaryTreeApp(int data) {
-        this.root = new Node(data);
     }
 
     public Node getRoot() {
@@ -479,7 +478,7 @@ public class BinaryTreeApp {
         System.out.println("---------------Inorder--------------");
 
         this.inorderHelper(root);
-        System.out.println("");
+        System.out.println();
     }
 
     public void preorder() {
@@ -489,7 +488,7 @@ public class BinaryTreeApp {
         System.out.println("---------------Preorder--------------");
 
         this.preorderHelper(root);
-        System.out.println("");
+        System.out.println();
 
     }
 
@@ -499,7 +498,7 @@ public class BinaryTreeApp {
         }
         System.out.println("---------------Postorder--------------");
         this.postorderHelper(root);
-        System.out.println("");
+        System.out.println();
 
     }
 
@@ -566,7 +565,7 @@ public class BinaryTreeApp {
 
     public static class MaxDepthAndNodes {
         private int maxDepth = 0; // To store the maximum depth
-        private List<Integer> nodesAtMaxDepth = new ArrayList<>(); // To store nodes at max depth
+        private final List<Integer> nodesAtMaxDepth = new ArrayList<>(); // To store nodes at max depth
 
 
         public void findMaxDepthAndNodes(Node root) {

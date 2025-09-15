@@ -7,7 +7,7 @@ public class SubArrayPrinter {
 
     public static void main(String[] args) {
 
-        int array[] = {1, 2, 3};
+        int[] array = {1, 2, 3};
         printSubarray(array);
     }
 
@@ -23,7 +23,7 @@ public class SubArrayPrinter {
                     }
                 }
                 System.out.print("]");
-                System.out.println("");
+                System.out.println();
             }
         }
     }

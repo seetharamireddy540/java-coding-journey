@@ -1,9 +1,13 @@
-Let’s start with the basics of **binary trees** and all the important terminology associated with them. Binary trees are a fundamental data structure in computer science and are widely used in algorithms and problem-solving.
+Let’s start with the basics of **binary trees** and all the important terminology associated with them. Binary trees are
+a fundamental data structure in computer science and are widely used in algorithms and problem-solving.
 
 ---
 
 ### **What is a Binary Tree?**
-A **binary tree** is a hierarchical data structure in which each node has at most two children, referred to as the **left child** and the **right child**. The topmost node in the tree is called the **root**, and nodes with no children are called **leaf nodes**.
+
+A **binary tree** is a hierarchical data structure in which each node has at most two children, referred to as the *
+*left child** and the **right child**. The topmost node in the tree is called the **root**, and nodes with no children
+are called **leaf nodes**.
 
 ---
 
@@ -68,7 +72,8 @@ A **binary tree** is a hierarchical data structure in which each node has at mos
         - Both the left and right subtrees must also be binary search trees.
 
 14. **Complete Binary Tree**:
-    - A binary tree in which all levels are completely filled except possibly the last level, which is filled from left to right.
+    - A binary tree in which all levels are completely filled except possibly the last level, which is filled from left
+      to right.
 
 15. **Full Binary Tree**:
     - A binary tree in which every node has either `0` or `2` children.
@@ -105,6 +110,7 @@ Consider the following binary tree:
 ---
 
 ### **Binary Tree Traversals**
+
 Traversal is the process of visiting all the nodes in a tree. There are three main types of traversals:
 
 1. **Inorder Traversal**:
@@ -128,6 +134,7 @@ Traversal is the process of visiting all the nodes in a tree. There are three ma
 ---
 
 ### **Applications of Binary Trees**
+
 1. **Binary Search Trees (BST)**:
     - Used for efficient searching, insertion, and deletion operations (average time complexity: O(log n)).
 
@@ -146,6 +153,7 @@ Traversal is the process of visiting all the nodes in a tree. There are three ma
 ---
 
 ### **Basic Operations on Binary Trees**
+
 1. **Insertion**:
     - Add a new node to the tree.
 
@@ -167,6 +175,7 @@ Traversal is the process of visiting all the nodes in a tree. There are three ma
 ---
 
 ### **Summary**
+
 - A binary tree is a hierarchical structure where each node has at most two children.
 - Key terms include **root**, **leaf**, **parent**, **child**, **depth**, **height**, and **subtree**.
 - Binary trees are used in many applications, such as BSTs, heaps, and expression trees.

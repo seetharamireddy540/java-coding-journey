@@ -1,6 +1,14 @@
 package com.example.javacodingjourney.ds;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class CourseSchedulerInDegree {
 
@@ -107,38 +115,17 @@ public class CourseSchedulerInDegree {
         return true;
     }
 
-    // Utility class for course validation
-    public static class CourseValidator {
-        public static boolean isValidSequence(List<String> sequence,
-                                              Map<String, List<String>> dependencies) {
-            Set<String> completed = new HashSet<>();
-
-            for (String course : sequence) {
-                // Check if all prerequisites are completed
-                if (dependencies.containsKey(course)) {
-                    for (String prerequisite : dependencies.get(course)) {
-                        if (!completed.contains(prerequisite)) {
-                            return false;
-                        }
-                    }
-                }
-                completed.add(course);
-            }
-            return true;
-        }
-    }
-
     public static void main(String[] args) {
         // Test case setup
         String[] courses = {"C1", "C2", "C3", "C4", "C5", "C6", "C7"};
         Map<String, List<String>> dependencies = new HashMap<>();
 
-        dependencies.put("C1", Arrays.asList("C2","C3"));
+        dependencies.put("C1", Arrays.asList("C2", "C3"));
         dependencies.put("C2", Arrays.asList("C6", "C3"));
         dependencies.put("C3", Arrays.asList("C4", "C5", "C6"));
         dependencies.put("C4", Arrays.asList("C5", "C6"));
         dependencies.put("C5", Arrays.asList("C6", "C7"));
-        dependencies.put("C6", Arrays.asList("C7"));
+        dependencies.put("C6", List.of("C7"));
         dependencies.put("C7", new ArrayList<>());
 
         // Test BFS approach
@@ -161,6 +148,27 @@ public class CourseSchedulerInDegree {
                     CourseValidator.isValidSequence(dfsResult, dependencies));
         } else {
             System.out.println("No valid sequence exists (cycle detected)");
+        }
+    }
+
+    // Utility class for course validation
+    public static class CourseValidator {
+        public static boolean isValidSequence(List<String> sequence,
+                                              Map<String, List<String>> dependencies) {
+            Set<String> completed = new HashSet<>();
+
+            for (String course : sequence) {
+                // Check if all prerequisites are completed
+                if (dependencies.containsKey(course)) {
+                    for (String prerequisite : dependencies.get(course)) {
+                        if (!completed.contains(prerequisite)) {
+                            return false;
+                        }
+                    }
+                }
+                completed.add(course);
+            }
+            return true;
         }
     }
 }

@@ -7,8 +7,8 @@ public class IncreasingSubArrayCount {
 
     public static void main(String[] args) {
 
-        int data[] = {1, 2, 3, 4};
-        int data2[] = {4, 3, 2, 1};
+        int[] data = {1, 2, 3, 4};
+        int[] data2 = {4, 3, 2, 1};
         int subArrayCount = countIncreasingSubArrayCount(data);
         int subArrayCount2 = countDecreasingSubarrays(data2);
         System.out.println("Increasing Subarray Count: " + subArrayCount);
@@ -18,6 +18,7 @@ public class IncreasingSubArrayCount {
     /**
      * This algorithm runs in O(n) where n is the length of the input array.
      * Space complexity is O(1) as we only use a constant amount of extra array.
+     *
      * @param data
      * @return
      */

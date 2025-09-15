@@ -55,7 +55,7 @@ public class ArrayPermutations {
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
-       // printPermutations(arr, 0);
+        // printPermutations(arr, 0);
         List<Integer> permutation = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
         boolean[] isUsed = new boolean[arr.length];

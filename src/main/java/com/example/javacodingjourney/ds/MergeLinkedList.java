@@ -7,7 +7,7 @@ public class MergeLinkedList {
 
     public static void main(String[] args) {
 
-        ListNode sortedList[] = new ListNode[3];
+        ListNode[] sortedList = new ListNode[3];
         sortedList[0] = createSortedList1();
         sortedList[1] = createSortedList2();
         sortedList[2] = createSortedList3();
@@ -32,55 +32,6 @@ public class MergeLinkedList {
 //            System.out.print(head.val + " ");
 //            head = head.next;
 //        }
-    }
-    public ListNode mergeSortedTwoLists(ListNode list1, ListNode list2) {
-        ListNode dummyHead = new ListNode(0);
-        ListNode current = dummyHead;
-
-        while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val) {
-                current.next = list1;
-                list1 = list1.next;
-            } else {
-                current.next = list2;
-                list2 = list2.next;
-            }
-            current = current.next;
-        }
-
-        current.next = (list1 != null) ? list1 : list2;
-        return dummyHead.next;
-    }
-
-    public ListNode mergeSortedLists(ListNode list1, ListNode list2) {
-        if (list1 == null) return list2;
-        if (list2 == null) return list1;
-
-        if (list1.val <= list2.val) {
-            list1.next = mergeSortedLists(list1.next, list2);
-            return list1;
-        } else {
-            list2.next = mergeSortedLists(list1, list2.next);
-            return list2;
-        }
-    }
-
-
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        public ListNode(int val) {
-            this.val = val;
-        }
-
-        @Override
-        public String toString() {
-            return "ListNode{" +
-                    "val=" + val +
-                    '}';
-        }
     }
 
     public static ListNode createSortedList1() {
@@ -114,5 +65,53 @@ public class MergeLinkedList {
         l2.next = l3;
         l3.next = l4;
         return l1;
+    }
+
+    public ListNode mergeSortedTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode current = dummyHead;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                current.next = list1;
+                list1 = list1.next;
+            } else {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            current = current.next;
+        }
+
+        current.next = (list1 != null) ? list1 : list2;
+        return dummyHead.next;
+    }
+
+    public ListNode mergeSortedLists(ListNode list1, ListNode list2) {
+        if (list1 == null) return list2;
+        if (list2 == null) return list1;
+
+        if (list1.val <= list2.val) {
+            list1.next = mergeSortedLists(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = mergeSortedLists(list1, list2.next);
+            return list2;
+        }
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    '}';
+        }
     }
 }

@@ -30,6 +30,17 @@ public class MinHeapApp {
         System.out.println(" Min -> " + minHeap.extractMin());
     }
 
+    public Integer findKthLarget(int[] nums, int k) {
+        PriorityBlockingQueue<Integer> priorityQueue = new PriorityBlockingQueue<>();
+        for (int num : nums) {
+            priorityQueue.add(num);
+            if (priorityQueue.size() > k) {
+                priorityQueue.poll();
+            }
+        }
+        return priorityQueue.peek();
+    }
+
     public static class MinHeap {
 
         private final int[] heap;
@@ -112,16 +123,5 @@ public class MinHeapApp {
             }
             throw new IllegalArgumentException("Empty heap");
         }
-    }
-
-    public Integer findKthLarget(int[] nums, int k) {
-        PriorityBlockingQueue<Integer> priorityQueue = new PriorityBlockingQueue<>();
-        for (int num : nums) {
-            priorityQueue.add(num);
-            if (priorityQueue.size() > k) {
-                priorityQueue.poll();
-            }
-        }
-        return priorityQueue.peek();
     }
 }

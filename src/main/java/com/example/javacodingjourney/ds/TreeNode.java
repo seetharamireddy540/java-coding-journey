@@ -1,10 +1,13 @@
 package com.example.javacodingjourney.ds;
 
-import com.sun.source.tree.Tree;
-import lombok.Getter;
-import lombok.Setter;
-
 public class TreeNode {
+
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+    public TreeNode(int val) {
+        this.val = val;
+    }
 
     public static void main(String[] args) {
         TreeNode node = new TreeNode(1);
@@ -14,13 +17,6 @@ public class TreeNode {
         node.setLeft(node1);
         node.setRight(node2);
 
-    }
-    public int val;
-    public TreeNode left;
-    public TreeNode right;
-
-    public TreeNode(int val) {
-        this.val = val;
     }
 
     public void setLeft(TreeNode left) {

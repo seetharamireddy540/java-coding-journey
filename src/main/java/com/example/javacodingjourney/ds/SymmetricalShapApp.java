@@ -58,7 +58,7 @@ public class SymmetricalShapApp {
             for (int j = 0; j < data[i].length; j++) {
                 System.out.print(data[i][j] + ",");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 }

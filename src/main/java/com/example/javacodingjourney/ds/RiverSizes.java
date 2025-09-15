@@ -6,15 +6,16 @@ public class RiverSizes {
 
     public static void main(String[] args) {
         int[][] matrix = {
-                {1,0,0,1,0},
-                {1,0,1,0,0},
-                {0,0,1,0,1},
-                {1,0,1,0,1},
-                {1,0,1,1,0}
+                {1, 0, 0, 1, 0},
+                {1, 0, 1, 0, 0},
+                {0, 0, 1, 0, 1},
+                {1, 0, 1, 0, 1},
+                {1, 0, 1, 1, 0}
         };
         System.out.println(RiverSizes.riverSizes(matrix)); // Output: [1, 2, 2, 2, 5]
 
     }
+
     public static ArrayList<Integer> riverSizes(int[][] matrix) {
         ArrayList<Integer> sizes = new ArrayList<>();
         for (int i = 0; i < matrix.length; i++) {

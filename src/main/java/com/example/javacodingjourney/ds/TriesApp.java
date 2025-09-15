@@ -24,8 +24,8 @@ public class TriesApp {
         System.out.println("Search 'ban': " + trie.search("ban"));           // false
 
 
-
     }
+
     public static class Trie {
         TrieNode root;
 

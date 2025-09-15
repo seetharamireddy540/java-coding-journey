@@ -49,7 +49,7 @@ public class RainWaterTrapping {
         return water;
     }
 
-    public static int trap(int[] elevation, int[] prefixMax, int suffixMax[]) {
+    public static int trap(int[] elevation, int[] prefixMax, int[] suffixMax) {
         if (elevation == null || elevation.length == 0) {
             return 0;
         }
@@ -64,15 +64,15 @@ public class RainWaterTrapping {
 
     public static void main(String[] args) {
         int[] elevation = {1, 2, 1, 3};
-        int prefixMax[] = computePrefixMax(elevation);
-        int suffixMax[] = computeSuffixMax(elevation);
+        int[] prefixMax = computePrefixMax(elevation);
+        int[] suffixMax = computeSuffixMax(elevation);
         System.out.println(trap(elevation)); // Output: 4
         System.out.println(trap(elevation, prefixMax, suffixMax)); // Output: 4
     }
 
     private static int[] computeSuffixMax(int[] elevation) {
         int length = elevation.length;
-        int suffixMax[] = new int[length];
+        int[] suffixMax = new int[length];
         suffixMax[length - 1] = elevation[length - 1];
         for (int i = length - 2; i >= 0; i--) {
             suffixMax[i] = Math.max(elevation[i], suffixMax[i + 1]);
@@ -82,7 +82,7 @@ public class RainWaterTrapping {
 
     private static int[] computePrefixMax(int[] elevation) {
         int length = elevation.length;
-        int prefixMax[] = new int[length];
+        int[] prefixMax = new int[length];
         prefixMax[0] = elevation[0];
         for (int i = 1; i < length; i++) {
             prefixMax[i] = Math.max(prefixMax[i - 1], elevation[i]);

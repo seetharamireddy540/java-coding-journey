@@ -5,7 +5,7 @@ public class LinkedListApp {
 
     }
 
-    public static class  LinkedList {
+    public static class LinkedList {
         private Node first;
 
         public LinkedList() {
@@ -36,21 +36,23 @@ public class LinkedListApp {
     }
 
     public static class Node {
-        private int data;
+        private final int data;
         private Node next;
 
         public Node(int data) {
             this.data = data;
         }
+
         public void displayNode() {
             System.out.println("{" + data + "}");
-        }
-        public void setNext(Node next) {
-            this.next = next;
         }
 
         public Node getNext() {
             return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
         }
 
         public int getData() {

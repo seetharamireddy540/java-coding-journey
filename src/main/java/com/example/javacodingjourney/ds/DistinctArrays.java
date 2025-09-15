@@ -10,13 +10,13 @@ public class DistinctArrays {
 
     public static void main(String[] args) {
 
-        int array1[] = {2, 4, 8, 9, 10, 39};
-        int array2[] = {1, 8, 55, 34};
+        int[] array1 = {2, 4, 8, 9, 10, 39};
+        int[] array2 = {1, 8, 55, 34};
 
         int n1 = array1.length;
         int n2 = array2.length;
 
-        int commonElements[] = findCommonElements(array1, array2);
+        int[] commonElements = findCommonElements(array1, array2);
         System.out.println(Arrays.toString(commonElements));
     }
 

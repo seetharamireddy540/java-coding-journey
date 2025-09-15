@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- Problem specifications:
- Given a sorted array and target value x
- Find k closest values to the target
- Return result in ascending order
-
+ * Problem specifications:
+ * Given a sorted array and target value x
+ * Find k closest values to the target
+ * Return result in ascending order
+ * <p>
  * How It Works
  * Binary Search Approach
  * Initialize two pointers (left and right)
