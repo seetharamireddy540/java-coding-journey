@@ -50,5 +50,41 @@ public class BestTimeToTravel {
         System.out.println("Best outbound day: " + result[0]);
         System.out.println("Best return day: " + result[1]);
         System.out.println("Total minimum cost: " + result[2]);
+
+        buildPrefix(outboundCosts, returnCosts);
     }
+
+    public static int[] buildPrefix(int[] outboundCosts, int[] returnCosts) {
+        int n = outboundCosts.length;
+        int[] minOutboundCostsSoFar = new int[n];
+        int[] minOutboundDaySoFar = new int[n];
+        minOutboundCostsSoFar[0] = outboundCosts[0];
+        minOutboundDaySoFar[0] = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (outboundCosts[i] < minOutboundCostsSoFar[i - 1]) {
+                minOutboundCostsSoFar[i] = outboundCosts[i];
+                minOutboundDaySoFar[i] = i;
+            } else {
+                minOutboundCostsSoFar[i] = minOutboundDaySoFar[i - 1];
+                minOutboundDaySoFar[i] = minOutboundDaySoFar[i - 1];
+            }
+        }
+
+        int minCost = Integer.MAX_VALUE;
+        int bestOutboundDay = -1;
+        int besetReturnDay = -1;
+        for (int j = 1; j < n; j++) {
+            int outboundDay = minOutboundDaySoFar[j - 1];
+            int totalCost = minOutboundCostsSoFar[j - 1] + returnCosts[j];
+
+            if (totalCost < minCost) {
+                minCost = totalCost;
+                bestOutboundDay = outboundDay;
+                besetReturnDay = j;
+            }
+        }
+        return new int[]{bestOutboundDay, bestOutboundDay, besetReturnDay};
+    }
+
 }
