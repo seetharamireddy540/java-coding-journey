@@ -1,5 +1,12 @@
 package com.example.javacodingjourney.leet;
+// This is coment
 
+/**
+ * This is classes
+ * fsfsd
+ *
+ * sfsdfs
+ */
 public class ShoppingCartApp {
 
     public static void main(String[] args) {
