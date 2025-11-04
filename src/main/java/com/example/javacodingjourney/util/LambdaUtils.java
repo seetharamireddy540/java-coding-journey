@@ -27,6 +27,7 @@ public class LambdaUtils {
         Map<Long, List<Employee>> map = employees.stream().collect(Collectors.groupingBy(Employee::getId));
         map.forEach((key, value) -> System.out.println(key + " " + value));
         List<? extends Number> numbers = new ArrayList<>();
+        System.out.println("Done");
 
     }
 
