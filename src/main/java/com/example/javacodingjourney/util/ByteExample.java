@@ -3,7 +3,6 @@ package com.example.javacodingjourney.util;
 public class ByteExample {
     public static void main(String[] args) {
         byte b = -50;  // In binary: 11001110
-
         // Without & 0xFF (sign extension happens)
         int directConversion = b;  // Results in -50 (negative remains negative)
         System.out.println("Direct conversion 1: " + directConversion);
