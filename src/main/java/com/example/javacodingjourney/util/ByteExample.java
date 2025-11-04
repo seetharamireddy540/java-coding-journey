@@ -6,7 +6,7 @@ public class ByteExample {
 
         // Without & 0xFF (sign extension happens)
         int directConversion = b;  // Results in -50 (negative remains negative)
-        System.out.println("Direct conversion: " + directConversion);
+        System.out.println("Direct conversion 1: " + directConversion);
         System.out.println("Binary: " + Integer.toBinaryString(directConversion));
         // Output: 11111111111111111111111111001110 (32 bits, sign extended)
 
