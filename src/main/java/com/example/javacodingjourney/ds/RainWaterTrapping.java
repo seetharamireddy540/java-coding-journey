@@ -1,6 +1,16 @@
 package com.example.javacodingjourney.ds;
 
+
+
 /**
+ *
+ * Height
+ *   4 |           *
+ *   3 |     *     *
+ *   2 |   * * * * * *
+ *   1 | * * * * * * * * *
+ *     +-------------------
+ *       0 1 2 3 4 5 6 7 8
  * You are given an array of integers which describe elevation at each point in a 2D landscape.
  * For example, the input [ 1 2 3 1 2 4 1 2 1 ] describes a landscape that looks like this:
  * <p>

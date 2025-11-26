@@ -10,8 +10,6 @@ public class InsertionSort {
         System.out.println(Arrays.toString(data));
         insertionSort(data);
         System.out.println(Arrays.toString(data));
-
-
     }
 
     public static void insertionSort(int[] data) {
