@@ -1,0 +1,224 @@
+import com.google.common.util.concurrent.ExecutionError;
+
+class SingleInstanceHashing {
+
+   public String userName;
+
+  /*
+   * We have a very expensive password hashing function.
+   */
+  private static String hashPassword(String password) {
+    return ""; // imagine this is actually expensive and slow
+  }
+
+
+  /*
+   * The hashing function is used in user authentication. We do not
+   * store the user's password, instead we store the hash of the
+   * user's password and hash the password in the request to see
+   * if the hashes match.
+   */
+  boolean isAuthenticated(String userName, String acutualHash) {
+
+      // Retrieve the correct password hash from our identity system
+      final String expectedHash = getPasswordHashForUser(userName);
+
+      // If the password hashes are equal then the request contains
+      // the correct password and authentication has succeeded.
+      return expectedHash.equals(actualHash);
+  }
+
+  /*
+   * But the password is used programmatically, not just for interactive logins!
+   * Sometimes we get a surge of API requests that all use the same password.
+   * When that happens we end up with multiple cores hashing the same password,
+   * which is very inefficient.
+   *
+   * This shows up as machines with a lot of threads in this callstack:
+   *
+   *   hashPassword(...)
+   *   isAuthenticated(...)
+   *   handleRequest(...)
+   *
+   * with all the threads redundantly hashing the same password! This wastes a
+   * lot of CPU.
+   *
+   * This method "single instances" the password hashing, so that if one thread
+   * is hashing a password then other threads that want to hash the same password
+   * will wait for the hashing to finish and use the first thread's result.
+   *
+   * (This method will be used in the authentication method, instead of directly
+   * hashing the password.)
+   *
+   * Note that we do NOT want to build a cache of passwords => hashes -- having
+   * a map of recently-used passwords would be bad from a security perspective.
+   * Any data structure we use will ideally only have entries for passwords that
+   * are currently being hashed (as opposed to having a list of the N most recently
+   * hashed passwords).
+   *
+   * We do NOT want to completely single-thread password evaluation though. If two
+   * different passwords need to be hashed then we will allow concurrent execution.
+   * We only want to single-instance concurrent hashing of the same password.
+   *
+   * You do NOT need to create any threads in this code. This method will be called
+   * by different threads, it only needs to synchronize the threads.
+   */
+  private String singleInstanceHash(String userName, String passwordFromRequest) {
+
+        // Calculate the hash of the password sent with the request
+       final String actualHash = hashPassword(passwordFromRequest);
+       boolean isAuthenticated =  isAuthenticated(userName, actualHash);
+
+    return actualHash;
+  }
+}
+
+
+public class ThreadUserName{
+
+ // Atomic integer containing the next thread ID to be assigned
+     private  String userNane;
+
+     // Thread local variable containing each thread's ID
+     private ThreadLocal<SingleInstanceHashing> threadId =
+         new ThreadLocal<SingleInstanceHashing>() {
+             @Override protected SingleInstanceHashing initialValue() {
+                 return nextId.getAndIncrement();
+         }
+     };
+
+     // Returns the current thread's unique ID, assigning it if necessary
+     public static int get() {
+         return threadId.get();
+     }
+}
+
+public class AuthSerivce {
+
+    private SingleInstanceHashing singleInstanceHashing;
+
+    // Mutex and Mutable data
+    private static Map<String, Lock>  userNameMap = new CurrentHashMap();
+
+    public AuthSerivce(SingleInstanceHashing singleInstanceHashing) {
+        this.singleInstanceHashing = singleInstanceHashing;
+    }
+
+    public String SingleInstanceHashing(String userName, String passwrod) {
+
+        userNameMap.put(userName,)
+        ThreadLocal<SingleInstanceHashing> threadLocalSingleInstnace = null;
+
+        try {
+
+            threadLocalSingleInstnace = ThreadLocal.withInitial(() -> new SingleInstanceHashing(userName));
+
+            SingleInstanceHashing singleInstanceHashing = threadLocalSingleInstnace.get();
+
+            singleInstanceHashing.singleInstanceHash(userName, acutualHash);
+
+        }  catch(Exception ex) {
+            ex.printStackTrace();
+        }  finally {
+            threadLocalSingleInstnace.remove();
+        }
+
+    }
+
+
+}
+
+/// user name and password
+//  Thread.Local -> check based user name if store the pass what is in the Thread local ocnte
+//  // CreATRE thread for passwrod processing and wait there
+
+/// Got a risk
+// If the uname in map and processing -> need wait for request until current infligh requsett being process
+// If the unsmaem is not in map (current hashmap) then ii cna create object to procees acompute pass
+// Once the compuatio nis don mreove frm map
+//
+
+public class Task implements Runnable {
+    private String fName;
+    private  String lName;
+    private Sring fullName;
+    private Sting modf;
+
+    public Task(String fName, String lName) {
+
+    }
+
+    public void run() {
+        synchronized(Task.class) {
+
+            this.fullName = this.fName + " " + this.lName;
+            this.isAuthenticated = ture;
+            sout(this.fullName)
+
+        }
+     }
+}
+
+public class ThreadApp {
+   public static (String[] arg) {
+    Task task1 = new Task("Ram" "Mittala")
+    Thread t1 = new Thread(task1);
+       Thread t2 = new Thread(task1);
+
+       t1.start();
+       t2.start();;
+   }
+}
+
+
+IMPLEMENTE LATER
+=================
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class UserNamePassword {
+
+    public Map<String, ReentrantLock> userNameMap = new ConcurrentHashMap<>();
+
+    public static void main(String[] args) throws InterruptedException {
+        UserNamePassword userNamePassword = new UserNamePassword();
+
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> userNamePassword.isValidPassword("ram", "dummy=1")).start();
+        }
+        for (int i = 0; i < 1; i++) {
+            new Thread(() -> userNamePassword.isValidPassword("mark", "dummy=1")).start();
+        }
+
+        Thread.currentThread().join();
+    }
+
+    public boolean isValidPassword(String userName, String password) {
+
+        ReentrantLock lock = userNameMap.computeIfAbsent(userName, (key) -> new ReentrantLock());
+        lock.lock();
+        try {
+                String actualHash = actualHash(userName, password);
+                String comutedHash = passwordHash(userName, password);
+                return actualHash.equals(comutedHash);
+
+        } catch (Exception e) {
+            return false;
+        } finally {
+            lock.unlock();
+        }
+
+    }
+
+    public String actualHash(String userName, String password) {
+        return "dummyahsh";
+    }
+
+    public String passwordHash(String userName, String password) throws InterruptedException {
+        // Computed Hash
+        System.out.println("I ma processing for usernmae=" + userName + " Thread -> " +Thread.currentThread().getName());
+        return "dummyahsh";
+    }
+}
+

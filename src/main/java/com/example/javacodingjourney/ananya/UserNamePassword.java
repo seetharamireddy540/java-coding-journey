@@ -39,7 +39,6 @@ public class UserNamePassword {
     }
 
     public String actualHash(String userName, String password) {
-        // Ddatabase
         return "dummyahsh";
     }
 
