@@ -6,7 +6,12 @@ import java.util.regex.Pattern;
 public class PhoneNumberValidation {
 
     public static void main(String[] args) {
+        // Using [] for digit matching
+        // [0-9]{3} matches exactly 3 digits
+        Pattern p1 = Pattern.compile("[0-9]{3}-[0-9]{3}-[0-9]{4}");
 
+        // Using () for grouping and capturing
+        // Each group captures a part of the phone number
         Pattern pattern = Pattern.compile("([0-9]{3})-([0-9]{3})-([0-9]{4})");
         String phone = "123-456-7890";
         Matcher m1 = pattern.matcher(phone);
