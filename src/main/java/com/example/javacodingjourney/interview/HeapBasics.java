@@ -31,7 +31,7 @@ import java.util.PriorityQueue;
 public class HeapBasics {
     public static void main(String[] args) {
         // Min Heap (default)
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>((a, b) -> b - a);
         minHeap.offer(5);
         minHeap.offer(2);
         minHeap.offer(8);
@@ -56,9 +56,9 @@ public class HeapBasics {
 
         // Custom Comparator Example
         PriorityQueue<int[]> customHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        customHeap.offer(new int[]{3, 100});
-        customHeap.offer(new int[]{1, 200});
-        customHeap.offer(new int[]{2, 300});
+        customHeap.offer(new int[]{3, 100, 90});
+        customHeap.offer(new int[]{1, 200, 5});
+        customHeap.offer(new int[]{2, 300, 9});
 
         System.out.println("\nCustom Heap (sorted by first element):");
         while (!customHeap.isEmpty()) {

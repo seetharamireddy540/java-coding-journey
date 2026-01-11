@@ -8,8 +8,8 @@ public class KthLargetElement {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
-        for (int num : nums) {
-            minHeap.offer(num);
+        for (int num : nums) { // O (n)
+            minHeap.offer(num); // o(long(n)
             if (minHeap.size() > k) {
                 minHeap.poll(); // Remove smallest
             }
