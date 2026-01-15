@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Test {
+public @interface RamTest {
     // Optional parameters for test configuration
     boolean enabled() default true;
     String description() default "";
