@@ -1,6 +1,11 @@
 package com.example.javacodingjourney.gita;
 import java.util.*;
 
+/**
+ * Problem Statement: The problem typically involves merging overlapping intervals from a given list of intervals, where each interval is represented by a start and end time.
+ *
+ * Example: Input: [[1,3], [2,6], [8,10], [15,18]] Output: [[1,6], [8,10], [15,18]]
+ */
 public class MergingSortedIntervals {
     public int[][] merge(int[][] intervals) {
         // If the input is empty, return empty array
