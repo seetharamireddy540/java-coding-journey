@@ -12,15 +12,13 @@ public class JavaPrimitives {
         List<LoanApplication> loanApplications = List.of(la1, la2);
         Set<LoanApplication> fee = loanApplications.stream()
                 .filter(la -> la.getLoanAmount().compareTo(BigDecimal.valueOf(100)) >= 0)
-                .map(la -> {
+                .peek(la -> {
                     BigDecimal loanFee = la.getLoanAmount().multiply(BigDecimal.valueOf(0.12)); // 12%
                     la.setLoanFee(loanFee);
-                         return  la;
                         }
                 ).collect(Collectors.toSet());
 
         fee.forEach(System.out::println);
-        System.out.println(fee);
 
     }
 
