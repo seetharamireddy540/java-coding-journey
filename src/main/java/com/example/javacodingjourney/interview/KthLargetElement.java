@@ -9,11 +9,11 @@ public class KthLargetElement {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
         for (int num : nums) { // O (n)
-            minHeap.offer(num); // o(long(n)
+            minHeap.offer(num); // o(long(k)
             if (minHeap.size() > k) {
                 minHeap.poll(); // Remove smallest
             }
-        }
+        } // n log k
 
         return minHeap.peek(); // Top of min heap is kth largest
     }

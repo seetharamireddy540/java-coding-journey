@@ -24,6 +24,21 @@ repositories {
 }
 
 dependencies {
+    implementation(platform("software.amazon.awssdk:bom:2.27.21"))
+    implementation("software.amazon.awssdk:s3")
+    implementation("software.amazon.awssdk:bedrock")
+    implementation("software.amazon.awssdk:bedrockruntime")
+    implementation("software.amazon.awssdk:dynamodb")
+    implementation("software.amazon.awssdk:dynamodb-enhanced")
+    implementation("software.amazon.awssdk:ecs")
+    implementation("software.amazon.awssdk:sts")
+    implementation("software.amazon.awssdk:sqs")
+    implementation("software.amazon.awssdk:sns")
+    implementation("software.amazon.awssdk:ec2")
+    implementation("software.amazon.awssdk:cloudwatch")
+    implementation("software.amazon.awssdk:kms")
+    implementation("software.amazon.awssdk:iam")
+    implementation("software.amazon.awssdk:regions")
     implementation("org.springframework.security:spring-security-crypto:6.2.0")
 //    implementation("org.springframework.ai:spring-ai-starter-mcp-server")
     implementation("org.springframework.boot:spring-boot-starter-web")
