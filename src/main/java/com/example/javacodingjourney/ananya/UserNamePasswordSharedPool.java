@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Option B — shared pool + per-user task queue.
@@ -18,9 +19,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * Why this is better than a single per-user lock:
  * - When 100 ram tasks arrive, only ONE ram task is sitting on a worker thread.
- *   The other 99 are in ram's per-user queue, NOT blocking pool threads.
+ * The other 99 are in ram's per-user queue, NOT blocking pool threads.
  * - gita's task therefore finds free workers immediately. No head-of-line
- *   blocking even if ram floods the system.
+ * blocking even if ram floods the system.
  * - Thread count stays bounded regardless of user count.
  */
 public class UserNamePasswordSharedPool {
@@ -33,13 +34,15 @@ public class UserNamePasswordSharedPool {
         return t;
     });
 
-    // Per-user state. Guard the Deque + inFlight flag together via the UserQueue's monitor.
+    // Per-user state. Guard the Deque + inFlight flag together via the UserQueue's
+    // monitor.
     private final Map<String, UserQueue> userQueues = new ConcurrentHashMap<>();
     private final AtomicInteger ramDone = new AtomicInteger();
     private final AtomicInteger gitaDone = new AtomicInteger();
 
     private static final class UserQueue {
         final Deque<Runnable> tasks = new ArrayDeque<>();
+        final ReentrantLock lock = new ReentrantLock();
         boolean inFlight = false;
     }
 
@@ -62,17 +65,22 @@ public class UserNamePasswordSharedPool {
         Runnable task = () -> validate(userName, password, startMillis);
 
         Runnable toRun = null;
-        synchronized (uq) {
+        ReentrantLock lock = uq.lock;
+        lock.lock();
+        try {
             if (uq.inFlight) {
                 uq.tasks.addLast(task);
             } else {
                 uq.inFlight = true;
                 toRun = task;
             }
+            if (toRun != null) {
+                scheduleOnPool(uq, toRun);
+            }
+        } finally {
+            lock.unlock();
         }
-        if (toRun != null) {
-            scheduleOnPool(uq, toRun);
-        }
+
     }
 
     private void scheduleOnPool(UserQueue uq, Runnable task) {
@@ -81,15 +89,19 @@ public class UserNamePasswordSharedPool {
                 task.run();
             } finally {
                 Runnable next;
-                synchronized (uq) {
+                uq.lock.lock();
+                try {
                     next = uq.tasks.pollFirst();
                     if (next == null) {
                         uq.inFlight = false;
                     }
+                } finally {
+                    uq.lock.unlock();
                 }
                 if (next != null) {
                     scheduleOnPool(uq, next);
                 }
+
             }
         });
     }
@@ -107,8 +119,10 @@ public class UserNamePasswordSharedPool {
         long doneAt = System.currentTimeMillis() - startMillis;
         System.out.printf("[t+%5dms] DONE   user=%s thread=%s%n",
                 doneAt, userName, Thread.currentThread().getName());
-        if ("ram".equals(userName)) ramDone.incrementAndGet();
-        else if ("gita".equals(userName)) gitaDone.incrementAndGet();
+        if ("ram".equals(userName))
+            ramDone.incrementAndGet();
+        else if ("gita".equals(userName))
+            gitaDone.incrementAndGet();
     }
 
     public void shutdown() {
