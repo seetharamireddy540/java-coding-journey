@@ -2,6 +2,8 @@ package com.example.javacodingjourney.ananya;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class UserNamePassword {
@@ -10,24 +12,34 @@ public class UserNamePassword {
 
     public static void main(String[] args) throws InterruptedException {
         UserNamePassword userNamePassword = new UserNamePassword();
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
 
-        for (int i = 0; i < 10; i++) {
-            new Thread(() -> userNamePassword.isValidPassword("ram", "dummy=1")).start();
+        for(int i = 0; i<100; i++) {
+            executorService.execute(() -> userNamePassword.isValidPassword("ram", "dummy=1"));
         }
-        for (int i = 0; i < 1; i++) {
-            new Thread(() -> userNamePassword.isValidPassword("gita", "dummy=1")).start();
-        }
+        executorService.execute(() -> userNamePassword.isValidPassword("gita", "dummy=1"));
+
+        // for(int i = 0; i<100; i++) {
+        //     executorService.submit(() -> userNamePassword.isValidPassword("gita", "dummy=1"));
+        // }
+        // for (int i = 0; i < 10; i++) {
+        //     new Thread(() -> userNamePassword.isValidPassword("ram", "dummy=1")).start();
+        // }
+        // for (int i = 0; i < 1; i++) {
+        //     new Thread(() -> userNamePassword.isValidPassword("gita", "dummy=1")).start();
+        // }
 
         Thread.currentThread().join();
     }
 
     public boolean isValidPassword(String userName, String password) {
-
+        System.out.println("Current Processing Thread -" + Thread.currentThread().getName());
         ReentrantLock lock = userNameMap.computeIfAbsent(userName, (key) -> new ReentrantLock());
         lock.lock();
         try {
                 String actualHash = actualHash(userName, password);
                 String comutedHash = passwordHash(userName, password);
+                Thread.sleep(10000L);// Mimic compute time
                 return actualHash.equals(comutedHash);
 
         } catch (Exception e) {
